@@ -13,7 +13,7 @@ const Note = require('../models/note');
 router.get('/notes', (req, res, next) => {
   mongoose.connect(MONGODB_URI)
     .then(() => {
-      const searchTerm = 'lady gaga';
+      const searchTerm = req.query.searchTerm;
       let filter = {};
 
       if (searchTerm) {
@@ -28,29 +28,32 @@ router.get('/notes', (req, res, next) => {
         })
         .catch(next);
     });
-
-  // console.log('Get All Notes');
-  // res.json([
-  //   { id: 1, title: 'Temp 1' }, 
-  //   { id: 2, title: 'Temp 2' }, 
-  //   { id: 3, title: 'Temp 3' }
-  // ]);
-
-
+});
+ 
 /* ========== GET/READ A SINGLE ITEM ========== */
 router.get('/notes/:id', (req, res, next) => {
-
-  console.log('Get a Note');
-  res.json({ id: 2 });
-
+  const {id} = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+  Note.findById(id)
+    .then(result => {
+      if(result) {
+        res.json(result);
+      } else {
+        next();
+      }
+    })
+    .catch(next);
 });
 
 /* ========== POST/CREATE AN ITEM ========== */
 router.post('/notes', (req, res, next) => {
-
-  console.log('Create a Note');
-  res.location('path/to/new/document').status(201).json({ id: 2 });
-
+  const requiredFields = ['title', 'content'];
+  // for (let i = 0)
+  
 });
 
 /* ========== PUT/UPDATE A SINGLE ITEM ========== */
