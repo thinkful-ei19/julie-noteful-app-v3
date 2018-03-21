@@ -4,8 +4,8 @@ const express = require('express');
 // Create an router instance (aka "mini-app")
 const router = express.Router();
 const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-const { MONGODB_URI } = require('../config');
+
+// const { PORT, MONGODB_URI } = require('../config');
 
 const Note = require('../models/note');
 
