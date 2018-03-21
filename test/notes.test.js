@@ -64,24 +64,6 @@ describe('Noteful API - Notes', function () {
         });
     });
 
-    it('should return correct search results for a searchTerm query', function () {
-      const term = 'gaga';
-      const dbPromise = Note.find(
-        { $text: { $search: term } },
-        { score: { $meta: 'textScore' } })
-        .sort({ score: { $meta: 'textScore' } });
-      const apiPromise = chai.request(app).get(`/api/notes?searchTerm=${term}`);
-
-      return Promise.all([dbPromise, apiPromise])
-        .then(([data, res]) => {
-          expect(res).to.have.status(200);
-          expect(res).to.be.json;
-          expect(res.body).to.be.a('array');
-          expect(res.body).to.have.length(1);
-          expect(res.body[0]).to.be.an('object');
-          expect(res.body[0].id).to.equal(data[0].id);
-        });
-    });
 
     it('should return an empty array for an incorrect query', function () {
       const dbPromise = Note.find({ title: { $regex: /NotValid/i } });
@@ -100,20 +82,23 @@ describe('Noteful API - Notes', function () {
 
   describe('GET /api/notes/:id', function () {
 
-    it('should return correct notes', function () {
+    it('should return correct notes', function() {
       let data;
+      //1. First, call the database
       return Note.findOne().select('id title content')
         .then(_data => {
           data = _data;
+          //2. then call the API
           return chai.request(app).get(`/api/notes/${data.id}`);
         })
         .then((res) => {
           expect(res).to.have.status(200);
           expect(res).to.be.json;
-
+  
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.keys('id', 'title', 'content');
-
+          expect(res.body).to.have.keys('id', 'title', 'content', 'created');
+  
+          //3. then compare
           expect(res.body.id).to.equal(data.id);
           expect(res.body.title).to.equal(data.title);
           expect(res.body.content).to.equal(data.content);
