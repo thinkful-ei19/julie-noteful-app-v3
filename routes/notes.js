@@ -51,9 +51,21 @@ router.get('/notes/:id', (req, res, next) => {
 
 /* ========== POST/CREATE AN ITEM ========== */
 router.post('/notes', (req, res, next) => {
-  const requiredFields = ['title', 'content'];
-  // for (let i = 0)
-  
+  const {title, content} = req.body;
+  if (!title) {
+    const err = new Error ('Missing `title` in request body');
+    err.status = 400;
+    return next(err);
+  }
+  const newItem = {title, content};
+
+  Note.create(newItem)
+    .then(result => {
+      res.location(`${req.originalUrl}/${result.id}`.status(201).json(result);
+    })
+    .catch(err => {
+      next(err);
+    });
 });
 
 /* ========== PUT/UPDATE A SINGLE ITEM ========== */
