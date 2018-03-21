@@ -11,23 +11,20 @@ const Note = require('../models/note');
 
 /* ========== GET/READ ALL ITEM ========== */
 router.get('/notes', (req, res, next) => {
-  mongoose.connect(MONGODB_URI)
-    .then(() => {
-      const searchTerm = req.query.searchTerm;
-      let filter = {};
+  const searchTerm = req.query.searchTerm;
+  let filter = {};
 
-      if (searchTerm) {
-        const re = new RegExp(searchTerm, 'i');
-        filter.title = { $regex: re };
-      }
+  if (searchTerm) {
+    const re = new RegExp(searchTerm, 'i');
+    filter.title = { $regex: re };
+  }
 
-      return Note.find(filter)
-        .sort('created')
-        .then(results => {
-          res.json(results);
-        })
-        .catch(next);
-    });
+  return Note.find(filter)
+    .sort('created')
+    .then(results => {
+      res.json(results);
+    })
+    .catch(next);
 });
  
 /* ========== GET/READ A SINGLE ITEM ========== */
