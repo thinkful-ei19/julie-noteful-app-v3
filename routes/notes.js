@@ -53,15 +53,16 @@ router.get('/notes/:id', (req, res, next) => {
 router.post('/notes', (req, res, next) => {
   const {title, content} = req.body;
   if (!title) {
-    const err = new Error ('Missing `title` in request body');
+    const err = new Error('Missing `title` in request body');
     err.status = 400;
     return next(err);
   }
-  const newItem = {title, content};
+
+  const newItem = { title, content };
 
   Note.create(newItem)
     .then(result => {
-      res.location(`${req.originalUrl}/${result.id}`.status(201).json(result);
+      res.location(`${req.originalUrl}/${result.id}`).status(201).json(result);
     })
     .catch(err => {
       next(err);
