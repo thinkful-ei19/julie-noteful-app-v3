@@ -5,7 +5,7 @@ const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
 const express = require('express');
 
-const { TEST_MONGODB_URI } = require('../config');
+const { TEST_MONGODB_URI } = require('../config'); //
 
 const Note = require('../models/note');
 const seedNotes = require('../db/seed/notes');
@@ -16,7 +16,7 @@ chai.use(chaiHttp);
 
 describe('Noteful API - Notes', function () {
   before(function () {
-    return mongoose.connect(TEST_MONGODB_URI);
+    return mongoose.connect(TEST_MONGODB_URI); //
   });
 
   beforeEach(function () {
@@ -124,6 +124,7 @@ describe('Noteful API - Notes', function () {
         .catch(err => err.response)
         .catch(res => {
           expect(res).to.have.status(404);
+          console.log(res.status);
         });
     });
 
@@ -227,7 +228,7 @@ describe('Noteful API - Notes', function () {
       };
 
       return chai.request(app)
-        .put('/api/notes/AAAAAAAAAAAAAAAAAAAAAAAA')
+        .put('/api/notes/9000000000000')
         .send(updateItem)
         .catch(err => err.response)
         .then(res => {

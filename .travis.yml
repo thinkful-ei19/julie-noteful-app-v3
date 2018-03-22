@@ -1,13 +1,11 @@
 language: node_js
 node_js: node
 env:
-  - NODE_ENV=test
-# services:
-#   - [DATABASE-TYPE]  
-# deploy:
-#   provider: heroku
-#   api_key:
-#     secure: [YOUR-API-KEY]
-#   app: [YOUR-APP-NAME]
-#   on:
-#     repo: [YOUR-APP-REPO]
+- NODE_ENV=test
+deploy:
+  provider: heroku
+  api_key:
+    secure: Vy7srK5pV4stcGakq0+Pq0x4T7ywwBhfun48TWMr1LxHpzhlOFidHb8KJRAXtCDIHuMMVXd3WQTDbFhcyTnNoYWYO45aS1eSJLd/FR8D/RSdneNEQzROpmMDuxFTB2dONUc5RXOu3oGBreTEAGnNzCpduh/sRhjQopIQnPBb60hH4a1HIIej5KTm3ADnM57fhJJxiB+NS/uZzhb05jc1b/prIjgIBH4JbjoRpcIimt4l4gJxOLuYOj4/J84MtGRzgXr/U6lC08DczswGpIsJOmscrC1UumnuIxpHDF5iaHSKUvlBV1Z84vzdt7bwlX3do7KMk8OUAFLq+cCxUmcGKcxxXirHQ6YAXhi4A4JBtuBe86prhAYJ20kd8p3PmxOEeRzQgNRULLM3Yh/IEqg4SnlJ+xyKRNZAVNLxKbsz+liLvQLyXBrKNNhrkp9XAHp48WetHjgeaC9iQxhBsXhyAEENTuCwbiVf2vpyK82S6M2Pc3adxz25GsznukTfdZmJuP4Vna9EsiJMaCbCAvTmdnq/E9I4kzLaZhm9LT2IhcmHvFj8k+JJUExre8fcOOQEq2tscw/xZW88RghHmvWehHJdQbVgOPZknzJFE8a8+4WbQG6B8UfGErgMEqI9Ib5jqESo0VgYdL+HfXwugz1f9Al7bfqDg2rIM6CXAUxp5DA=
+  app: julie-noteful-app-v3
+  on:
+    repo: thinkful-ei19/julie-noteful-app-v3

@@ -72,6 +72,12 @@ router.put('/notes/:id', (req, res, next) => {
   const { title, content } = req.body;
 
   /***** Never trust users - validate input *****/
+  if (id && isNaN(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+
   if (!title) {
     const err = new Error('Missing `title` in request body');
     err.status = 400;
@@ -80,9 +86,10 @@ router.put('/notes/:id', (req, res, next) => {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const err = new Error('The `id` is not valid');
-    err.status = 400;
+    err.status = 404;
     return next(err);
   }
+
 
   const updateItem = { title, content };
   const options = { new: true };
